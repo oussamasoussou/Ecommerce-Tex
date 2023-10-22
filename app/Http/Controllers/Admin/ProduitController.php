@@ -6,15 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Produit\StoreProduitRequest;
 use App\Http\Requests\Produit\UpdateProduitRequest;
 use App\Models\Categorie;
+use App\Models\couleurProduit;
 use App\Models\ImageProduit;
 use App\Models\Produits;
 use App\Models\SousCategorie;
+use App\Models\TailleProduit;
 use Intervention\Image\Facades\Image as Image;
 use Exception;
 use Illuminate\Http\Request;
 use App\Models\Information;
 use App\Models\Commande;
 use App\Models\ProduitCommande;
+use App\Models\Couleur;
+use App\Models\Taille;
 
 class ProduitController extends Controller
 {
@@ -29,7 +33,9 @@ class ProduitController extends Controller
         $sous_categorie = SousCategorie::all();
         $produit = Produits::all();
         $information = Information::all();
-        return view('admin.produit.index', compact('categorie', 'sous_categorie', 'produit', 'information'));
+        $couleurs = Couleur::all();
+        $tailles = Taille::all();
+        return view('admin.produit.index', compact('categorie', 'sous_categorie', 'produit', 'information','couleurs', 'tailles'));
     }
 
     /**
@@ -42,7 +48,9 @@ class ProduitController extends Controller
         $categorie = Categorie::all();
         $sous_categorie = SousCategorie::all();
         $produit = Produits::all();
-        return view('admin.produit.create', compact('categorie', 'sous_categorie', 'produit'));
+        $couleurs = Couleur::all();
+        $tailles = Taille::all();
+        return view('admin.produit.create', compact('categorie', 'sous_categorie', 'produit','couleurs', 'tailles'));
     }
 
     /**
@@ -66,6 +74,8 @@ class ProduitController extends Controller
             'sous_categorie_id' => 'nullable|sometimes',
             'sale' => 'sometimes',
             'bestseller' => 'sometimes',
+            'couleurProduit' => 'sometimes',
+            'tailleProduit' => 'sometimes',
         ]);
         $produit = new Produits();
         $produit->lib = $request->lib;
@@ -106,6 +116,23 @@ class ProduitController extends Controller
 
             }
         }    
+
+        if ($request->couleurProduit) {
+            foreach ($request->couleurProduit as $couleur) {
+                couleurProduit::create([
+                    'produit_id' => $produit->id,
+                    'couleur_id' => $couleur
+                ]);
+            }
+        }
+        if ($request->tailleProduit) {
+            foreach ($request->tailleProduit as $taille) {
+                TailleProduit::create([
+                    'produit_id' => $produit->id,
+                    'taille_id' => $taille
+                ]);
+            }
+        }
 
         return redirect('/produits')->with('status', 'Produit a été ajouté avec succès');
     }
@@ -235,7 +262,7 @@ class ProduitController extends Controller
             $ca['sous_categorie'] = $ca->sous_categorie;
             $categorie[] = $ca;
         }
-        return view('frontEnd.layouts.product', compact('categorie', 'produit'));
+        return view('frontEnd.product', compact('categorie', 'produit'));
     }
 
     public function searchProduct(Request $request)
@@ -263,7 +290,7 @@ class ProduitController extends Controller
             $ca['sous_categorie'] = $ca->sous_categorie;
             $categorie[] = $ca;
         }
-        return view('frontEnd.layouts.product', compact('categorie', 'produit'));
+        return view('frontEnd.product', compact('categorie', 'produit'));
     }
 
     public function PanierProduct(Request $request)
@@ -286,6 +313,8 @@ class ProduitController extends Controller
         return view('frontEnd.Panier', compact('produit', 'total','information','listeCateg'));
     }
 
+    
+   
     public function ConfirmePanier(Request $request)
     {
         $listeCateg = Categorie::all();

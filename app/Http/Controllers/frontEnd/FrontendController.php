@@ -5,6 +5,7 @@ namespace App\Http\Controllers\frontEnd;
 use App\Http\Controllers\Controller;
 use App\Models\Apropos;
 use App\Models\Carousel;
+use App\Models\Couleur;
 use App\Models\Produits;
 use App\Models\BestSeller;
 use App\Models\Categorie;
@@ -13,6 +14,7 @@ use App\Models\Information;
 use App\Models\ImageProduit;
 
 
+use App\Models\Taille;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -50,6 +52,8 @@ class FrontendController extends Controller
 
     public function getProduct($id)
     {
+        $couleurs = Couleur::all();
+        $tailles = Taille::all();
         $Listeproduit = Produits::where('sous_categorie_id', $id)->get();
         $produit = [];
     
@@ -61,8 +65,7 @@ class FrontendController extends Controller
     
         $listeCateg = Categorie::with('sous_categorie')->get();
         $information = Information::all();
-    
-        return view('frontEnd.layouts.product', compact('listeCateg', 'produit', 'information'));
+        return view('frontEnd.product', compact('listeCateg', 'produit', 'information','couleurs', 'tailles'));
     }
     
 
@@ -86,6 +89,8 @@ class FrontendController extends Controller
 
     public function getDetailsProduct($id)
     {
+        $produitCouleurs = Produits::with('couleurProduits.couleur')->find($id);
+
         $produit = Produits::where('id',$id)->first();
          $Listeproduits= Produits::orderBy('id', 'desc')->take(5)->get();
         $Listeproduit=[];
@@ -104,7 +109,7 @@ class FrontendController extends Controller
             $categorie[] = $ca;
         }
         $image_produit = ImageProduit::where('produit_id',$produit->id)->get();
-        return view('frontEnd.layouts.details_product', compact('categorie', 'produit', 'information','listeCateg','Listeproduit','image_produit'));
+        return view('frontEnd.details_product', compact('categorie', 'produit', 'information','listeCateg','Listeproduit','image_produit','produitCouleurs'));
     }
     public function getDetailsSeller($id)
     {
@@ -127,6 +132,6 @@ class FrontendController extends Controller
             $categorie[] = $ca;
         }
         $image_produit = ImageProduit::where('produit_id',$produit->id)->get();
-        return view('frontEnd.layouts.details_product', compact('categorie', 'produit', 'information','listeCateg','Listeproduit','image_produit'));
+        return view('frontEnd.details_product', compact('categorie', 'produit', 'information','listeCateg','Listeproduit','image_produit'));
     }
 }

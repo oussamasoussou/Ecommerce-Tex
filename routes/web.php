@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\CouleurController;
+use App\Http\Controllers\Admin\TailleController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -117,5 +119,17 @@ Route::middleware(['auth','isAdmin'])->group(function() {
     
     Route::post('confirmation-commande/{id}', [CommandeController::class, 'confirmation']);
 
-   
+    Route::get('/taille', [TailleController::class, 'index']); 
+    Route::get('create-taille', [TailleController::class, 'create']); 
+    Route::post('add-taille', [TailleController::class, 'store']); 
+    Route::get('edit-taille/{id}', [TailleController::class, 'edit']); 
+    Route::put('update-taille/{id}', [TailleController::class, 'update']); 
+    Route::get('delete-taille/{id}', [TailleController::class, 'destroy']);
+
+    Route::get('/couleur', [CouleurController::class, 'index']); 
+    Route::get('create-couleur', [CouleurController::class, 'create']); 
+    Route::post('add-couleur', [CouleurController::class, 'store']); 
+    Route::get('edit-couleur/{id}', [CouleurController::class, 'edit']); 
+    Route::put('update-couleur/{id}', [CouleurController::class, 'update']); 
+    Route::get('delete-couleur/{id}', [CouleurController::class, 'destroy']);
 });
