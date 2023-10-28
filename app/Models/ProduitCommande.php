@@ -13,7 +13,9 @@ class ProduitCommande extends Model
         'produit_id',
         'commande_id',
         'qte',
-        'prix'
+        'prix',
+        'couleur',
+        'taille'
     ];
 
     public function produit()

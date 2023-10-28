@@ -139,6 +139,29 @@
                                         <textarea class="form-control" id="small_desc" rows="4" name="small_desc" required></textarea>
                                     </div> 
                             </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Couleur du Produit</label>
+                                        <select class="form-control select2" multiple="multiple" name="couleurProduit[]" id="couleurProduit">
+                                            @foreach ($couleurs as $couleur)
+                                                <option value="{{ $couleur->id }}">{{ $couleur->nom }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Taille du Produit</label>
+                                        <select class="form-control select2" multiple="multiple" name="tailleProduit[]" id="tailleProduit">
+                                            @foreach ($tailles as $taille)
+                                                <option value="{{ $taille->id }}">{{ $taille->taille }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             
                             <button type="submit" class="btn btn-primary mr-2">Submit</button> 
                         </form>

@@ -24,6 +24,8 @@
                                         <th>Prénom</th> 
                                         <th>Téléphone</th> 
                                         <th>Email</th> 
+                                        <th>Couleur</th>
+                                        <th>Taille</th>
                                         <th>Status</th>
 
                                         <th>
@@ -47,6 +49,8 @@
                                             <td>{{ $com->prenom }}</td> 
                                             <td>{{ $com->tel }}</td> 
                                             <td>{{ $com->email }}</td> 
+                                            <td>{{ $com->couleur }}</td> 
+                                            <td>{{ $com->taille }}</td> 
                                             <td>{{ $com->status }}</td> 
                                             <td><div style="text-align:center"><a href="{{ url('edit-commandes/'.$com->id) }}" class="btn btn-icon btn-outline-success"><i class="ik ik-file"></i></a></div></td> 
                                             <td><div style="text-align:center"><a href="{{ url('delete-commande/'.$com->id) }}" class="btn btn-icon btn-outline-danger"><i class="ik ik-trash"></i></a></div></td> 
@@ -60,6 +64,8 @@
                                         <th>Prénom</th> 
                                         <th>Téléphone</th> 
                                         <th>Email</th> 
+                                        <th>Couleur</th>
+                                        <th>Taille</th>
                                         <th>Status</th>
 
                                         <th>

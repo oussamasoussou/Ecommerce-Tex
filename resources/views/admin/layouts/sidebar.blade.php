@@ -20,6 +20,20 @@
                     </div>
                 </div>
                 <div class="nav-item has-sub">
+                    <a href="#"><i class="ik ik-box"></i><span>Taille</span></a>
+                    <div class="submenu-content">
+                        <a href="{{ url('create-taille') }}" class="menu-item"><i class="ik-shopping-bag2"></i> Créer taille</a>
+                        <a href="{{ url('taille') }}" class="menu-item"><i class="ik-shopping-bag2"></i>Liste des taille</a>
+                    </div>
+                </div>
+                <div class="nav-item has-sub">
+                    <a href="#"><i class="ik ik-box"></i><span>Couleur</span></a>
+                    <div class="submenu-content">
+                        <a href="{{ url('create-couleur') }}" class="menu-item"><i class="ik-shopping-bag2"></i> Créer couleur</a>
+                        <a href="{{ url('couleur') }}" class="menu-item"><i class="ik-shopping-bag2"></i>Liste des couleurs</a>
+                    </div>
+                </div>
+                <div class="nav-item has-sub">
                     <a href="#"><i class="ik ik-box"></i><span>Produits</span></a>
                     <div class="submenu-content">
                         <a href="{{ url('create-produits') }}" class="menu-item"><i class="ik-shopping-bag2"></i> Créer produit</a>
