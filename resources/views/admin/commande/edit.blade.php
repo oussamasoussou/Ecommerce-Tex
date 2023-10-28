@@ -37,6 +37,8 @@
                                         <th>Produit</th>
                                         <th>Prix</th> 
                                         <th>Quantité</th> 
+                                        <th>Couleur</th> 
+                                        <th>Taille</th> 
                                         <th>Prix Total</th>   
                                     </tr>
                                 </thead>
@@ -47,6 +49,8 @@
                                             <td>{{ $com['nom'] }}</td>
                                             <td>{{ $com['prix'] }} &nbsp;TND</td> 
                                             <td>{{ $com['qte'] }}</td> 
+                                            <td>{{ $com['couleur'] }}</td> 
+                                            <td>{{ $com['taille'] }}</td> 
                                             <td>{{ $com['prix_total'] }}&nbsp; TND</td> 
                                        
                                           </tr> 
@@ -57,6 +61,8 @@
                                         <th>Produit</th>
                                         <th>Prix</th> 
                                         <th>Quantité</th> 
+                                        <th>Couleur</th> 
+                                        <th>Taille</th> 
                                         <th>Prix Total : {{$commande->prix}} &nbsp;TND</th>
                                     </tr>
                                 </tfoot>

@@ -13575,3 +13575,54 @@ input.quickview__value--number {
 .blog__card--meta__text {
   
 }
+
+.color-circle {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+.product__details--info__colors--item {
+  display: inline-block; /* Assurez-vous que chaque élément de couleur est en ligne */
+  margin-right: 10px; /* Espace entre chaque élément de couleur */
+}
+
+.color-options {
+  display: flex;
+}
+
+.color-option {
+  width: 30px; /* Ajustez la taille selon vos besoins */
+  height: 30px; /* Ajustez la taille selon vos besoins */
+  border-radius: 50%;
+  margin-right: 5px; /* Espacement entre les cercles */
+  cursor: pointer; /* Changez le curseur au survol */
+  display: inline-block;
+}
+
+
+.color-options-commande {
+  display: flex;
+  align-items: center;
+  padding-top: 20px
+}
+
+.color-circle-commande {
+  width: 30px; /* Ajustez la taille selon vos besoins */
+  height: 30px; /* Ajustez la taille selon vos besoins */
+  border-radius: 50%;
+  margin-right: 5px; /* Espacement entre les cercles */
+  cursor: pointer; /* Changez le curseur au survol */
+  display: inline-block;
+}
+
+
+.color-circle.selected {
+  border: 2px solid #000; /* Ajoutez un style de bordure pour indiquer la sélection */
+}
+
+.color-circle.selected {
+  border: 2px solidrgb(10, 104, 79)0; /* Ajoutez un style de bordure pour indiquer la sélection */
+  box-shadow: 0 0 10px rgba(255, 252, 252, 0.5); /* Ajoutez une ombre */
+}

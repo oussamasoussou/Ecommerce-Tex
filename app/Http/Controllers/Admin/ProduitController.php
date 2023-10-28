@@ -319,47 +319,75 @@ class ProduitController extends Controller
     {
         $listeCateg = Categorie::all();
         $information = Information::all();
-
+    
         $nom = $request->get('nom');
         $prenom = $request->get('prenom');
         $email = $request->get('email');
         $phone = $request->get('phone');
-        $Commande=new Commande();
-        $Commande->nom= $nom; 
-        $Commande->prenom= $prenom; 
-        $Commande->email= $email; 
-        $Commande->tel= $phone; 
-        $Commande->status= 'en cours'; 
+    
+        $Commande = new Commande();
+        $Commande->nom = $nom;
+        $Commande->prenom = $prenom;
+        $Commande->email = $email;
+        $Commande->tel = $phone;
+        $Commande->status = 'en cours';
         $Commande->save();
-
+    
         $liste_produit = $request->get('liste_product');
         $liste_quantite = $request->get('quantite_product');
-        $prix_total=0;
+        $prix_total = 0;
+    
+        $couleurs = $request->get('couleur');
+        $tailles = $request->get('taille');
+        $couleurId = $request->get('selected_couleur');
+
+    
         foreach ($liste_produit as $key => $produc) {
             $produit = $produc;
-            foreach ($liste_quantite as $keyquantite => $qte) {
+    
+            $quantite = isset($liste_quantite[$key]) ? $liste_quantite[$key] : 0;
+    
+            $commande_produit = new ProduitCommande();
 
-                if ($keyquantite == $key) {
+            $commande_produit->commande_id = $Commande->id;
+            $commande_produit->produit_id = $produc;
+            $commande_produit->qte = $quantite;
+            $commande_produit->commande_id = $Commande->id;
 
-                    $quantite = $qte;
-                    $commande_produit=new ProduitCommande();
-                    $commande_produit->produit_id=$produc;
-                    $commande_produit->qte=$quantite;
-                    $commande_produit->commande_id=$Commande->id;
-                    $prixProduit=Produits::where('id',$produit)->first();
-                    $prix_par_produit=floatval($prixProduit->prix) * $quantite;
-                    $commande_produit->prix=$prix_par_produit;
-                    $prix_total+=$prix_par_produit;
-                    $commande_produit->save();
-
-                   
+            
+            
+            
+    
+            $prixProduit = Produits::where('id', $produit)->first();
+            $prix_par_produit = floatval($prixProduit->prix) * $quantite;
+            $commande_produit->prix = $prix_par_produit;
+            $prix_total += $prix_par_produit;
+    
+            // Vérifier si la couleur et la taille sont sélectionnées
+            if (isset($couleurs[$key])) {
+                $couleurId = $couleurs[$key];
+                $couleur = Couleur::where('id', $couleurId)->first();
+                if ($couleur) {
+                    $commande_produit->couleur = $couleur->nom;
                 }
             }
+    
+            if (isset($tailles[$key])) {
+                $tailleId = $tailles[$key];
+                $taille = Taille::where('id', $tailleId)->first();
+                if ($taille) {
+                    $commande_produit->taille = $taille->taille;
+                }
+            }
+    
+            $commande_produit->save();
         }
-        $Commande->prix=$prix_total;
+    
+        $Commande->prix = $prix_total;
         $Commande->save();
-        return view('frontEnd.ValidationCommande',compact( 'information','listeCateg'));
+        return view('frontEnd.ValidationCommande', compact('information', 'listeCateg'));
     }
+    
 
 
     public function destroyImage($id)

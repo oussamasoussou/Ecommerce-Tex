@@ -40,6 +40,8 @@ class CommandeController extends Controller
                 'nom' => $produit->lib,
                 'prix' => $produit->prix,
                 'qte' => $cp->qte,
+                'couleur' => $cp->couleur,
+                'taille' => $cp->taille,
                 'prix_total' => $cp->prix
             );
         }
