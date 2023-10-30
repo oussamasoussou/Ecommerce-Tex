@@ -13576,6 +13576,16 @@ input.quickview__value--number {
   
 }
 
+.color-square {
+  width: 30px; /* Ajustez la taille selon vos préférences */
+  height: 30px; /* Ajustez la taille selon vos préférences */
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px; /* Espace entre le carré et le texte */
+  border: 1px solid #ccc; /* Bordure optionnelle pour les carrés */
+}
+
+
 .color-circle {
   display: inline-block;
   width: 20px;
@@ -13625,4 +13635,8 @@ input.quickview__value--number {
 .color-circle.selected {
   border: 2px solidrgb(10, 104, 79)0; /* Ajoutez un style de bordure pour indiquer la sélection */
   box-shadow: 0 0 10px rgba(255, 252, 252, 0.5); /* Ajoutez une ombre */
+}
+
+.width-select{
+  width: 90px;
 }

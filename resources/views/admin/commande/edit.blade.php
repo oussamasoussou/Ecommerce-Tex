@@ -51,7 +51,7 @@
                                             <td>{{ $com['qte'] }}</td> 
                                             <td>{{ $com['couleur'] }}</td> 
                                             <td>{{ $com['taille'] }}</td> 
-                                            <td>{{ $com['prix_total'] }}&nbsp; TND</td> 
+                                            <td>{{ $com['prix_total'] }}&nbsp;TND</td> 
                                        
                                           </tr> 
                                      @endforeach 

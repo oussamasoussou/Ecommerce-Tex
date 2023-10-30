@@ -243,6 +243,18 @@ class ProduitController extends Controller
      */
     public function destroy($id)
     {
+        $couleur_produits = couleurProduit::where('produit_id', $id)->get();
+        foreach ($couleur_produits as $couleur_produit){
+            $couleurProduit = couleurProduit::where('id', $couleur_produit->id)->delete();
+        }
+
+        $taille_produits = TailleProduit::where('produit_id', $id)->get();
+        foreach ($taille_produits as $taille_produit){
+            $TailleProduit = TailleProduit::where('id', $taille_produit->id)->delete();
+        }
+
+        
+
         $produit = Produits::findOrFail($id);
         $produit->delete();
         return redirect('/produits')->with('status', 'Produit a été Supprimer avec succès');

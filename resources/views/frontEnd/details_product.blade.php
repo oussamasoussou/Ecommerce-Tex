@@ -37,31 +37,74 @@
                             </div>
                         </div>
                     </div>   
-                    <div class="col">
+                       <div class="col">
                         <div class="product__details--info">
                             <form action="#">
-                                <h3 class="product__details--info__title mb-15">{{$produit->lib}}</h3>
-                               
+                                <!-- <h3 class="product__details--info__title mb-15">{{$produit->lib}}</h3>
+
                                 <div class="product__details--info__price mb-10">
-                                        @if($produit->prix_promo)
-                                            <span style="text-decoration: line-through; color: red; font-size: 1.5rem;  font-weight: 500;">{{ $produit->prix }}&nbsp;TND</span>
-                                            <span class="current__price">{{ $produit->prix_promo }}&nbsp;TND</span>
-                                        @else
-                                            <span class="current__price">{{ $produit->prix }}&nbsp;TND</span>
-                                        @endif
+                                    @if($produit->prix_promo)
+                                        <span style="text-decoration: line-through; color: red; font-size: 1.5rem; font-weight: 500;">
+                                            {{ $produit->prix }}&nbsp;TND
+                                        </span>
+                                        <span class="current__price">
+                                            {{ $produit->prix_promo }}&nbsp;TND
+                                        </span>
+                                    @else
+                                        <span class="current__price">
+                                            {{ $produit->prix }}&nbsp;TND
+                                        </span>
+                                    @endif
                                 </div> 
+                                <p class="product__details--info__desc mb-15" style="overflow-wrap: anywhere;">
+                                    {{$produit->desc}}
+                                </p> -->
+
+
+                                <div class="d-flex align-items-center">
+                                    <div style="flex: 1;">
+                                        <h3 class="product__details--info__title mb-15"> {{$produit->lib}} </h3>
+                                    </div>
+                                    <div style="width: 90px;">
+                                        <div class="product__details--info__price mb-10">
+                                            @if($produit->prix_promo)
+                                                <span style="text-decoration: line-through; color: red; font-size: 1.5rem; font-weight: 500;">
+                                                    {{ $produit->prix }}&nbsp;TND
+                                                </span>
+                                                <span class="current__price">
+                                                    {{ $produit->prix_promo }}&nbsp;TND
+                                                </span>
+                                            @else
+                                                <span class="current__price">
+                                                    {{ $produit->prix }}&nbsp;TND
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                 
+                                </h3>
+
                                 
+
+                                <p class="product__details--info__desc mb-15" style="overflow-wrap: anywhere;">
+                                    {{$produit->desc}}
+                                </p>
+
                                 @if(count($produit->couleurProduits) > 0)
                                     <div class="product__details--info__colors mb-20">
                                         <h4 class="product__details--info__colors--title">Couleurs Disponibles</h4>
                                         <ul class="product__details--info__colors--list">
                                             @foreach ($produit->couleurProduits as $couleurProduit)
                                                 <li class="product__details--info__colors--item">
-                                                    <span class="color-circle" style="background-color: #{{ $couleurProduit->couleur->html_code }};"></span>                                            </li>
+                                                    <div class="color-square" style="background-color: #{{ $couleurProduit->couleur->code }};"></div>
+                                                   
+                                                </li>
                                             @endforeach
                                         </ul>
                                     </div>
                                 @endif
+
 
                                 @if(count($produit->tailleProduits) > 0)
                                     <div class="product__details--info__colors mb-20">
@@ -76,14 +119,14 @@
                                     </div>
                                 @endif
 
-                                <p class="product__details--info__desc mb-15" style="overflow-wrap: anywhere;">{{$produit->small_desc}}</p>
+                                
                                 <div class="product__variant">
                                     <div class="product__variant--list quantity d-flex align-items-center mb-20">
-                                    <br>
+                                        <br>
                                     </div>
-                                    <a class="product__card--btn primary__btn"  onclick="ajouterArticle({{$produit}})" >Ajouter au panier</a>
-                                   
+                                    <a class="product__card--btn primary__btn" onclick="ajouterArticle({{$produit}})">Ajouter au panier</a>
                                 </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -93,32 +136,35 @@
 
                 <!-- Start product details tab section -->
                 <section class="product__details--tab__section section--padding">
-                    <div class="container">
-                        <div class="row row-cols-1">
-                            <div class="col">
-                                <ul class="product__tab--one product__details--tab d-flex mb-30">
-                                    <li class="product__details--tab__list active" data-toggle="tab"
-                                        data-target="#description">Description</li>
-                                </ul>
-                                <div class="product__details--tab__inner border-radius-10">
-                                    <div class="tab_content">
-                                        <div id="description" class="tab_pane active show">
-                                            <div class="product__tab--content">
-                                                <div class="product__tab--content__step mb-30">
-                                                    <h2 class="product__tab--content__title h4 mb-10">{{$produit->lib}}
-                                                    </h2>
-                                                    <p class="product__tab--content__desc"
-                                                        style="overflow-wrap: anywhere;">{{$produit->desc}}</p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+    <div class="container">
+        <div class="row row-cols-1">
+            <div class="col">
+                <ul class="product__tab--one product__details--tab d-flex mb-30">
+                    <li class="product__details--tab__list active" data-toggle="tab" data-target="#description">
+                        Description
+                    </li>
+                </ul>
+                <div class="product__details--tab__inner border-radius-10">
+                    <div class="tab_content">
+                        <div id="description" class="tab_pane active show">
+                            <div class="product__tab--content">
+                                <div class="product__tab--content__step mb-30">
+                                    <h2 class="product__tab--content__title h4 mb-10">
+                                        {{$produit->lib}}
+                                    </h2>
+                                    <p class="product__tab--content__desc">
+                                        {{$produit->desc}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
                 <!-- End product details tab section -->
 
                 <!-- Start product section -->
@@ -171,7 +217,7 @@
                                                     href="{{url('details-produit/'.$recomended->id)}}">{{$recomended->lib}}
                                                 </a></h3>
                                             <div class="product__card--price">
-                                                <span class="current__price">{{$recomended->prix}} &nbsp; TND</span>
+                                                <span class="current__price">{{$recomended->prix}} &nbsp;TND</span>
 
                                             </div>
 

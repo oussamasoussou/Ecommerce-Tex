@@ -108,7 +108,7 @@
                                     <tr>
                                         <td>
                                             @if ($prod->couleurProduits->isNotEmpty())
-                                                <div class="checkout__input--list">
+                                                <div class="checkout__input--list" style="padding:10px 0px 10px 50px" >
                                                     <select name="couleur[]" id="couleur" class="checkout__input--field border-radius-5" required>
                                                         <option value="">Choisissez une couleur</option>
                                                         @foreach ($prod->couleurProduits as $couleurProduit)
@@ -126,7 +126,7 @@
                                     <tr>
                                     <td>
                                         @if ($prod->tailleProduits->isNotEmpty())
-                                            <div class="checkout__input--list">
+                                            <div class="checkout__input--list" style="padding:10px 0px 10px 50px">
                                                 <select class="checkout__input--field border-radius-5" required
                                                     name="taille[]" id="taille">
                                                     <option value="Choisissez votre taille">Choisissez votre taille
@@ -149,7 +149,7 @@
 
                             <div class="minicart__amount_list d-flex justify-content-between">
                                 <span>Total:</span>
-                                <span><b>{{$total}}&nbsp; TND</b></span>
+                                <span><b>{{$total}}&nbsp;TND</b></span>
                             </div>
                         </div>
                         <button class="checkout__now--btn primary__btn" type="submit">Confirmer votre
