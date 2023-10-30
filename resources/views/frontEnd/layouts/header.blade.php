@@ -213,7 +213,7 @@ function ajouterArticle(product) {
             <h4 class="minicart__subtitle"><a href="#">${product.lib}</a></h4>
             <span class="color__variant"></span>
             <div class="minicart__price">
-                <span class="current__price">${product.prix}&nbsp; TND</span>
+                <span class="current__price">${product.prix}&nbsp;TND</span>
             </div>
             <div class="minicart__text--footer d-flex align-items-center">
                 <div class="quantity__box minicart__quantity">

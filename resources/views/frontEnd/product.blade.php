@@ -52,7 +52,7 @@
                                                             <span style="text-decoration: line-through; color: red;">{{ $prod->prix }}&nbsp;TND</span>
                                                             <span style="color: green;">{{ $prod->prix_promo }}&nbsp;TND</span>
                                                         @else
-                                                            <span style="color: red;">{{ $prod->prix }}&nbsp;TND</span>
+                                                            <span style="color: green;">{{ $prod->prix }}&nbsp;TND</span>
                                                         @endif
                                                         </div>
                                                         <!-- Ajout de la sélection de couleur -->

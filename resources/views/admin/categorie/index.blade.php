@@ -8,7 +8,7 @@
             <div class="col-lg-6">
                 <p style="padding:0px 0px 0px 50px;font-size:20px; font-weight:bolder">  liste des Catégories    </p>
             </div> 
-            <div style="margin-bottom:20px">
+            <!-- <div style="margin-bottom:20px">
                 <div class="col-lg-3">
                     <div style= ><a href="{{ url('create-categorie') }}" class="btn btn-outline-primary"><p style="padding:0px 45px 0px 45px;">   AJOUTER CATEGORIE </p></a> </div>  
                 </div>
@@ -17,7 +17,7 @@
                     <div class="col-lg-3">
                         <a href="{{ url('create-sous-categorie') }}" class="btn btn-outline-info"><p style="padding:0px 40px 0px 45px;">   AJOUTER SOUS CATEGORIE </p></a> 
                     </div> 
-                </div> 
+                </div>  -->
         </div>
 
         <div class="row">
@@ -32,9 +32,11 @@
                                             <span style="color: white">Categorie {{$index+1}} :</span>
                                             <strong> <span style="color: white">{{ $cat->lib }} </span></strong>
                                             <a href=" {{ url('edit-categorie/'.$cat->id) }}" class="btn btn-icon">
-                                                <span style="color: red;padding:100px"> Supprimer ss</span>
-                                            </a><a href="{{ url('delete-categorie/'.$cat->id) }} " class="ml-3 btn btn-icon">
-                                            <span style="color: rgb(5, 200, 24);padding:200px"> Modifier</span></a>
+                                                <span style="color: green;padding:100px"> Modifier</span>
+                                            </a>
+                                            <a href="{{ url('delete-categorie/'.$cat->id) }} " class="ml-3 btn btn-icon">
+                                                <span style="color: red;padding:200px"> Supprimer</span>
+                                            </a>
                                         </th> 
                                     </thead>
                                     <thead>
