@@ -4,12 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\CouleurProduit;
+use App\Models\TailleProduit;
 
 class Produits extends Model
 {
     use HasFactory;
     protected $table = 'produit';
     protected $fillable = [
+        'id',
         'lib',
         'ref',
         'status',

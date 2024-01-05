@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Produit\StoreProduitRequest;
 use App\Http\Requests\Produit\UpdateProduitRequest;
 use App\Models\Categorie;
-use App\Models\couleurProduit;
+use App\Models\CouleurProduit;
 use App\Models\ImageProduit;
 use App\Models\Produits;
 use App\Models\SousCategorie;
@@ -119,7 +119,7 @@ class ProduitController extends Controller
 
         if ($request->couleurProduit) {
             foreach ($request->couleurProduit as $couleur) {
-                couleurProduit::create([
+                CouleurProduit::create([
                     'produit_id' => $produit->id,
                     'couleur_id' => $couleur
                 ]);
@@ -243,14 +243,16 @@ class ProduitController extends Controller
      */
     public function destroy($id)
     {
-        $couleur_produits = couleurProduit::where('produit_id', $id)->get();
+        $couleur_produits = CouleurProduit::where('produit_id', $id)->get();
         foreach ($couleur_produits as $couleur_produit){
-            $couleurProduit = couleurProduit::where('id', $couleur_produit->id)->delete();
+            $couleurProduit = CouleurProduit::where('id', $couleur_produit->id)->first();
+            $couleurProduit = $couleurProduit->delete();
         }
 
         $taille_produits = TailleProduit::where('produit_id', $id)->get();
         foreach ($taille_produits as $taille_produit){
-            $TailleProduit = TailleProduit::where('id', $taille_produit->id)->delete();
+            $TailleProduit = TailleProduit::where('id', $taille_produit->id)->first();
+            $TailleProduit = $TailleProduit->delete();
         }
 
         
@@ -312,18 +314,26 @@ class ProduitController extends Controller
         $total = 0;
         $reqq = $request;
         $produit = [];
+    
         if ($request->has('id_product')) {
             $liste_product = $request->get('id_product');
             foreach ($liste_product as $produc) {
                 $current_product = Produits::where('id', '=', $produc)->first();
-                $current_product['quantite'] = $request->get('quantite_' . $produc);
-                $total += floatval($request->get('quantite_' . $produc)) * $current_product->prix;
+                $quantite = $request->get('quantite_' . $produc);
                 
+                // Utiliser le prix_promo s'il est différent de null, sinon utiliser le prix
+                $prixUnitaire = $current_product->prix_promo !== null ? $current_product->prix_promo : $current_product->prix;
+    
+                $total += floatval($quantite) * $prixUnitaire;
+                
+                $current_product['quantite'] = $quantite;
                 $produit[] = $current_product;
             }
         }
-        return view('frontEnd.Panier', compact('produit', 'total','information','listeCateg'));
+    
+        return view('frontEnd.Panier', compact('produit', 'total', 'information', 'listeCateg'));
     }
+    
 
     
    

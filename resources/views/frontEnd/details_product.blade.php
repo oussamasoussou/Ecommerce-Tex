@@ -5,38 +5,41 @@
     class="container">
     <div class="row row-cols-lg-2 row-cols-md-2 row-cols-1">
     <div class="col">
-    <div class="product__details--media d-flex">
-        <div class="product__media--nav swiper">
-        <div class="swiper-wrapper">
-        @foreach($image_produit as $img)
-        <div class="swiper-slide">
-        <div class="product__media--nav__items">
-        <img class="product__media--nav__items--img" src="/{{$img->img}}">
-        </div>
-        </div>
-        @endforeach
-        </div>
-        </div>
-        <div class="product__media--right">
-            <div class="product__media--preview swiper">
-                <div class="swiper-wrapper">
-                    @foreach($image_produit as $img)
-                        <div class="swiper-slide">
-                            <div class="product__media--preview__items">
-                                <a href="/{{$img->img}}" class="glightbox" data-gallery="product-media-preview"
-                                    data-title="Image {{$loop->iteration}}">
-                                    <img class="product__media--nav__items--img" src="/{{$img->img}}" alt="product-img">
-                                </a>
-                            </div>
+        <div class="product__details--media d-flex">
+            <div class="product__media--nav swiper">
+            <div class="swiper-wrapper">
+                @foreach($image_produit as $img)
+                    <div class="swiper-slide swiper-slide-visible swiper-slide-next" style="height:75px;">
+                        <div class="product__media--nav__items">
+                            <img class="product__media--nav__items--img" src="/{{$img->img}}"  style="width:100px; height:80px">
                         </div>
-                     @endforeach
-                </div>
-                <div class="swiper__nav--btn swiper-button-next"></div>
-                <div class="swiper__nav--btn swiper-button-prev"></div>
+                    </div>
+                @endforeach
             </div>
-                            </div>
-                        </div>
-                    </div>   
+
+
+            </div>
+            <div class="product__media--right">
+                <div class="product__media--preview swiper">
+                    <div class="swiper-wrapper">
+                        @foreach($image_produit as $img)
+                            <div class="swiper-slide">
+                                <div class="product__media--preview__items">
+                                    <a href="/{{$img->img}}" class="glightbox" data-gallery="product-media-preview"
+                                        data-title="Image {{$loop->iteration}}">
+                                        <img class="product__media--nav__items--img" src="/{{$img->img}}" alt="product-img">
+                                    </a>
+                                </div>
+                            </div> 
+                        @endforeach
+                    </div>
+                    <div class="swiper__nav--btn swiper-button-next"></div>
+                    <div class="swiper__nav--btn swiper-button-prev"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
                        <div class="col">
                         <div class="product__details--info">
                             <form action="#">
@@ -179,14 +182,14 @@
                                 <div class="col custom-col-2 mb-30">
                                     <article class="product__card">
                                         <div class="product__card--thumbnail">
-                                            <a class="product__card--thumbnail__link display-block"
+                                            <a class="product__card--thumbnail__link display-block-detail"
                                                 href="{{url('details-produit/'.$recomended->id)}}">
                                                 @foreach ($recomended->img as $img )
                                                 <img style="width: 370px;height: 319px;"
-                                                    class="product__card--thumbnail__img product__primary--img display-block"
+                                                    class="product__card--thumbnail__img product__primary--img display-block-detail"
                                                     src="/{{$img->img}}" alt="product-img">
                                                 <img style="width: 370px;height: 319px;"
-                                                    class="product__card--thumbnail__img product__secondary--img display-block"
+                                                    class="product__card--thumbnail__img product__secondary--img display-block-detail"
                                                     src="/{{$img->img}}" alt="product-img">
                                                 @endforeach
                                             </a>
@@ -217,7 +220,12 @@
                                                     href="{{url('details-produit/'.$recomended->id)}}">{{$recomended->lib}}
                                                 </a></h3>
                                             <div class="product__card--price">
-                                                <span class="current__price">{{$recomended->prix}} &nbsp;TND</span>
+                                                @if($recomended->prix_promo)
+                                                    <span style="text-decoration: line-through; color: red;">{{ $recomended->prix }}&nbsp;TND</span>
+                                                    <span style="color: green;">{{ $recomended->prix_promo }}&nbsp;TND</span>
+                                                @else
+                                                    <span style="color: red;">{{ $recomended->prix }}&nbsp;TND</span>
+                                                @endif
 
                                             </div>
 

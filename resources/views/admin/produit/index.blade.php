@@ -54,7 +54,7 @@
                                             <td>{{ $prod->prix }}</td> 
                                             <td>{{ $prod->status }}</td> 
                                             <td><div style="text-align:center"><a href="{{ url('edit-produits/'.$prod->id) }}" class="btn btn-icon btn-outline-success"><i class="ik ik-file"></i></a></div></td> 
-                                            <td><div style="text-align:center"><a href="{{ url('delete-produits/'.$prod->id) }}" class="btn btn-icon btn-outline-danger"><i class="ik ik-trash"></i></a></div></td> 
+                                            <td><div style="text-align:center"><a href="{{ url('delete-produits/'.$prod->id) }}" class="btn btn-icon btn-outline-danger"><i class="ik ik-trash"></i></a></div></td>                                        
                                         </tr> 
                                      @endforeach 
                                 </tbody>

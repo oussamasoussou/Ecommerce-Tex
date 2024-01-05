@@ -40,6 +40,7 @@
                                         <th>Couleur</th> 
                                         <th>Taille</th> 
                                         <th>Prix Total</th>   
+                                        <th>Image</th>   
                                     </tr>
                                 </thead>
                                 <tbody>  
@@ -52,7 +53,9 @@
                                             <td>{{ $com['couleur'] }}</td> 
                                             <td>{{ $com['taille'] }}</td> 
                                             <td>{{ $com['prix_total'] }}&nbsp;TND</td> 
-                                       
+                                            <td><img src="{{ asset($com['image']) }}" alt="Image Produit" class="image-hover" style="width:100px; height:100px"></td>
+
+
                                           </tr> 
                                      @endforeach 
                                 </tbody>
@@ -64,6 +67,8 @@
                                         <th>Couleur</th> 
                                         <th>Taille</th> 
                                         <th>Prix Total : {{$commande->prix}} &nbsp;TND</th>
+                                        <th>Image</th>   
+
                                     </tr>
                                 </tfoot>
                             </table>

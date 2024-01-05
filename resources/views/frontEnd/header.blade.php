@@ -200,6 +200,9 @@ function ajouterArticle(product) {
         imgPr = null;
     }
 
+    // Afficher le prix en fonction de prix_promo s'il n'est pas null, sinon utiliser prix
+    let prixAffiche = product.prix_promo !== null ? product.prix_promo : product.prix;
+
     // Mettez à jour le contenu du panier
     let newArticle = document.createElement('div');
     newArticle.id = product.id;
@@ -213,7 +216,52 @@ function ajouterArticle(product) {
             <h4 class="minicart__subtitle"><a href="#">${product.lib}</a></h4>
             <span class="color__variant"></span>
             <div class="minicart__price">
-                <span class="current__price">${product.prix} &nbsp;TND</span>
+                <span class="current__price">${prixAffiche}&nbsp;TND</span>
+            </div>
+            <div class="minicart__text--footer d-flex align-items-center">
+                <div class="quantity__box minicart__quantity">
+                    <button type="button" class="quantity__value decrease" aria-label="quantity value" value="Decrease Value" onclick="subquantite(${product.id})">-</button>
+                    <label>
+                        <input type="number" id="quantite_${product.id}" name="quantite_${product.id}" class="quantity__number" value="1" data-counter />
+                    </label>
+                    <button type="button" class="quantity__value increase" aria-label="quantity value" value="Increase Value" onclick="addquantite(${product.id})">+</button>
+                </div>
+                <button class="minicart__product--remove" aria-label="minicart remove btn" onclick="removeArticle(${product.id})">Supprimer</button>
+            </div>
+        </div>
+    `;
+
+    element.appendChild(newArticle);
+
+    countArticle();
+    updatePanierContent();
+
+    let messageElement = document.createElement('div');
+    messageElement.className = 'message';
+    messageElement.innerText = 'Produit ajouté au panier !';
+    document.body.appendChild(messageElement);
+
+    // Supprimez le message après 2 secondes
+    setTimeout(function () {
+        messageElement.remove();
+    }, 2000);
+}
+
+
+    // Mettez à jour le contenu du panier
+    let newArticle = document.createElement('div');
+    newArticle.id = product.id;
+    newArticle.classList.add('cardachat', 'minicart__product--items', 'd-flex');
+    newArticle.innerHTML = `
+        <input type="hidden" value='${product.id}' name="id_product[]">
+        <div class="minicart__thumbnail">
+            <a href="#"><img src="/${imgPr}" alt="product-img"></a>
+        </div>
+        <div class="minicart__text">
+            <h4 class="minicart__subtitle"><a href="#">${product.lib}</a></h4>
+            <span class="color__variant"></span>
+            <div class="minicart__price">
+                <span class="current__price">${prixAffiche}&nbsp;TND</span>
             </div>
             <div class="minicart__text--footer d-flex align-items-center">
                 <div class="quantity__box minicart__quantity">
@@ -244,6 +292,7 @@ function ajouterArticle(product) {
     }, 2000);
     updatePanierContent();
 }
+
 
 function removeArticle(id) {
     let element = document.getElementById(id);

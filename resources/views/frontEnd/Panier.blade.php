@@ -75,34 +75,24 @@
                                                     <a class="display-block" href="#"><img
                                                             class="display-block border-radius-5" src="{{$prod->img}}"
                                                             alt="cart-product"
-                                                            style="width:68px;height:50px"></a>
-                                                    <span class="product__thumbnail--quantity">{{$prod->quantite}}</span>
+                                                            style="width:68px; height:50px; text-align:center"></a>
                                                 </div>
-                                                <div class="product__description">
-                                                    <h4 class="product__description--name"><a
-                                                            href="#">{{ $prod->lib }}</a></h4>
-                                                    <span class="product__description--variant">Disponible</span>
-                                                </div>
+                                                
                                             </div>
-                                            <!-- @if ($prod->couleurProduits->isNotEmpty())
-                                                <div class="checkout__input--list">
-                                                    <label>Choisissez une couleur:</label>
-                                                    <div class="color-options">
-                                                        @foreach ($prod->couleurProduits as $couleurProduit)
-                                                            <span style="color: #{{ $couleurProduit->couleur->html_code }};">{{ $couleurProduit->couleur->nom }}</span>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            @endif -->
                                             <div style=padding:5px></div>
 
                                         </td>
-                                        <td class="cart__table--body__list">
-                                            <span class="cart__price">{{ $prod->prix }} &nbsp;TND</span>
-                                        </td>
-
-                                        
                                     </tr>
+                                    <tr class="cart__table--body__items">
+                                        <td class="cart__table--body__list">
+                                            <span><b>{{ $prod->lib }}</b></span>
+                                        </td>
+                                        <td class="cart__table--body__list">
+                                            <span style="color: green;"><b>{{ $prod->prix_promo !== null ? $prod->prix_promo : $prod->prix }} &nbsp;TND</b></span>
+                                        </td>
+                                    </tr>
+
+                            
                                        
                                     </input>
                                     <tr>
@@ -148,7 +138,7 @@
                         <div class="minicart__amount">
 
                             <div class="minicart__amount_list d-flex justify-content-between">
-                                <span>Total:</span>
+                                <span><b>Total:</b> </span>
                                 <span><b>{{$total}}&nbsp;TND</b></span>
                             </div>
                         </div>

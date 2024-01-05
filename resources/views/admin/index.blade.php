@@ -41,7 +41,7 @@
                                 </thead>
                                 <tbody>  
                                     @foreach ($commande as $com )
-                                        <tr>
+                                        <tr> 
                                             <td>{{ $com->id }}</td>
                                             <td>{{ $com->nom }}</td> 
                                             <td>{{ $com->prenom }}</td> 

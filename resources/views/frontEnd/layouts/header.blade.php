@@ -55,40 +55,38 @@
                     </a>
                 </div>
                 <div class="main__logo">
-                @foreach ($information as $info )
-                    <h1 class="main__logo--title"><a class="main__logo--link" href="{{ url('/') }}"><img style="width: 155px;height:60px" src="{{$info->logo}}" alt="logo-img"></a></h1>
-                @endforeach
+                    @foreach ($information as $info )
+                        <h1 class="main__logo--title"><a class="main__logo--link" href="{{ url('/') }}"><img style="width: 155px;height:60px" src="{{ asset($info->logo) }}" alt="logo-img"></a></h1>
+                    @endforeach
                 </div>
                 <div class="header__menu d-none d-lg-block">
                     <nav class="header__menu--navigation">
                         <ul class="d-flex">
                             <li class="header__menu--items">
-                                <a class="header__menu--link" href="{{ url('/') }}">ACCUEIL </a>
+                                <a class="header__menu--link" href="{{ url('/') }}"><b>ACCUEIL</b>  </a>
                             </li> 
                             <li class="header__menu--items">
-                                <a class="header__menu--link">NOS PRODUITS <span class="menu__plus--icon">+</span></a>
-                                <ul class="header__sub--menu">
+                                <a class="header__menu--link" onclick="toggleSubMenu()"><b> NOS PRODUITS </b><span class="menu__plus--icon">+</span></a>
+                                <ul id="productSubMenu" class="header__sub--menu">
                                     @foreach ($listeCateg as $cat)
                                         <li class="header__sub--menu__items">
-                                            <div href="{{ url('produit/'.$cat->id) }}" class="header__sub--menu__link"><span style="color:#255c6f ; font-size:15px">{{ $cat->lib }}</span></div>
+                                            <a href="{{ url('produit/'.$cat->id) }}" class="header__sub--menu__link"><span style="color:#255c6f ; font-size:15px"><b>{{ $cat->lib }}</b></span></a>
                                             @if($cat->sous_categorie->count() > 0)
-                                                <!-- <ul class="header__sub--menu"> -->
-                                                    @foreach($cat->sous_categorie as $sous_categorie)
-                                                        <li class="header__sub--menu__items">
-                                                         <a href="{{ url('produit/'.$sous_categorie->id) }}" class="header__sub--menu__link">&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:15px">{{ $sous_categorie->lib }}</span></a>
-                                                        </li>
-                                                    @endforeach
-                                                <!-- </ul> -->
+                                                @foreach($cat->sous_categorie as $sous_categorie)
+                                                    <li class="header__sub--menu__items">
+                                                        <a href="{{ url('produit/'.$sous_categorie->id) }}" class="header__sub--menu__link">&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:15px"><b>{{ $sous_categorie->lib }}</b></span></a>
+                                                    </li>
+                                                @endforeach
                                             @endif
                                         </li>
                                     @endforeach
                                 </ul>
                             </li>
                             <li class="header__menu--items mega__menu--items">
-                                <a class="header__menu--link" href="{{url('propos')}}"> À PROPOS DE NOUS</a>
+                                <a class="header__menu--link" href="{{url('propos')}}"><b>À PROPOS DE NOUS</b> </a>
                             </li>
                             <li class="header__menu--items">
-                                <a class="header__menu--link" href="{{url('page-contact')}}">CONTACT</a>
+                                <a class="header__menu--link" href="{{url('page-contact')}}"><b> CONTACT </b></a>
                             </li>
                         </ul>
                     </nav>
@@ -101,7 +99,6 @@
                                 <span class="visually-hidden">Search</span>
                             </a>
                         </li>
-                       
                         <li class="header__account--items">
                             <a class="header__account--btn minicart__open--btn" href="javascript:void(0)" data-offcanvas>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18.897" height="21.565" viewBox="0 0 18.897 21.565">
@@ -115,27 +112,37 @@
             </div>
         </div>
     </div>
+
     <div class="offcanvas-header" tabindex="-1">
         <div class="offcanvas__inner">
             <div class="offcanvas__logo">
                 <a class="offcanvas__logo_link"  >
-                    <img src="frontEnd/img/logo/logo.png" alt="Rokon Logo">
+                    <img src="{{ asset($info->logo) }}" alt="Rokon Logo">
                 </a>
                 <button class="offcanvas__close--btn" data-offcanvas>close</button>
             </div>
             <nav class="offcanvas__menu">
-                <ul class="offcanvas__menu_ul">
+                <ul class="offcanvas__menu_ul" style="height: 100%">
                 <li class="header__menu--items">
                             <a class="header__menu--link" href="{{ url('/') }}">ACCUEIL </a>
                             </li> 
                             <li class="header__menu--items">
                                 <a class="header__menu--link"  >NOS PRODUITS <span class="menu__plus--icon">+</span></a>
                                 <ul class="header__sub--menu">
-                                @foreach ($listeCateg as $cat )
-                                    @foreach ( $cat->sous_categorie as $key=>$sous_categorie )
-                                    <li class="header__sub--menu__items"><a href="{{url('produit/'.$sous_categorie->id)}}" class="header__sub--menu__link">{{ $sous_categorie->lib }}</a></li>
+                                @foreach ($listeCateg as $cat)
+                                        <li class="header__sub--menu__items">
+                                            <div href="{{ url('produit/'.$cat->id) }}" class="header__sub--menu__link"><span style="color:#255c6f ; font-size:20px"><b>{{ $cat->lib }}</b></span></div>
+                                            @if($cat->sous_categorie->count() > 0)
+                                                <!-- <ul class="header__sub--menu"> -->
+                                                    @foreach($cat->sous_categorie as $sous_categorie)
+                                                        <li class="header__sub--menu__items">
+                                                         <a href="{{ url('produit/'.$sous_categorie->id) }}" class="header__sub--menu__link">&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size:15px">{{ $sous_categorie->lib }}</span></a>
+                                                        </li>
+                                                    @endforeach
+                                                <!-- </ul> -->
+                                            @endif
+                                        </li>
                                     @endforeach
-                                @endforeach
                                 </ul>
                             </li>
                             <li class="header__menu--items mega__menu--items">
@@ -187,8 +194,23 @@
 
 <script> 
 
+function toggleSubMenu() {
+            var productSubMenu = document.getElementById("productSubMenu");
+            var additionalSubMenu = document.getElementById("additionalSubMenu");
+            var contactSubMenu = document.getElementById("contactSubMenu");
 
-function ajouterArticle(product) {
+            if (productSubMenu.style.display === "none") {
+                productSubMenu.style.display = "block";
+                additionalSubMenu.style.display = "none";
+                contactSubMenu.style.display = "none";
+            } else {
+                productSubMenu.style.display = "none";
+                additionalSubMenu.style.display = "block";
+                contactSubMenu.style.display = "block";
+            }
+        }
+
+        function ajouterArticle(product) {
     let element = document.getElementById('panier');
     let imgPr = null;
 
@@ -200,6 +222,9 @@ function ajouterArticle(product) {
         imgPr = null;
     }
 
+    // Afficher le prix en fonction de prix_promo s'il n'est pas null, sinon utiliser prix
+    let prixAffiche = product.prix_promo !== null ? product.prix_promo : product.prix;
+
     // Mettez à jour le contenu du panier
     let newArticle = document.createElement('div');
     newArticle.id = product.id;
@@ -210,10 +235,10 @@ function ajouterArticle(product) {
             <a href="#"><img src="/${imgPr}" alt="product-img"></a>
         </div>
         <div class="minicart__text">
-            <h4 class="minicart__subtitle"><a href="#">${product.lib}</a></h4>
+            <h4 class="minicart__subtitle"><a href="#">${product.lib} </a></h4>
             <span class="color__variant"></span>
             <div class="minicart__price">
-                <span class="current__price">${product.prix}&nbsp;TND</span>
+                <span class="current__price">${prixAffiche}&nbsp;TND</span>
             </div>
             <div class="minicart__text--footer d-flex align-items-center">
                 <div class="quantity__box minicart__quantity">
@@ -242,8 +267,8 @@ function ajouterArticle(product) {
     setTimeout(function () {
         messageElement.remove();
     }, 2000);
-    updatePanierContent();
 }
+
 
 function removeArticle(id) {
     let element = document.getElementById(id);

@@ -28,6 +28,7 @@
                                         <th style="width:54px">Code</th> 
                                         <th style="width:54px">Nom couleur</th> 
                                         <th style="width:5px">Modifier</th> 
+                                        <th style="width:5px">Supprimer</th> 
                                     </tr>
                                 </thead>
                                 <tbody>  
@@ -37,6 +38,8 @@
                                             <td>{{ $coul->code }}</td>
                                             <td>{{ $coul->nom }}</td>
                                             <td><div style="text-align: center"><a href="{{ url('edit-couleur/'.$coul->id) }}" class="btn btn-icon btn-outline-success"><i class="ik ik-file"></i></a></div></td> 
+                                            <td><div style="text-align: center"><a href="{{ url('delete-couleur/'.$coul->id) }}" class="btn btn-icon btn-outline-danger"><i class="ik ik-trash"></i></a></div></td> 
+
                                         </tr> 
                                      @endforeach 
                                 </tbody>
@@ -46,6 +49,7 @@
                                         <th style="width:54px">Code</th> 
                                         <th style="width:54px">Nom couleur</th> 
                                         <th style="width:5px">Modifier</th> 
+                                        <th style="width:5px">Supprimer</th> 
                                     </tr>
                                 </tfoot>
                             </table>

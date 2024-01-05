@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Commande;
+use App\Models\ImageProduit;
 use App\Models\ProduitCommande;
 use App\Models\Produits;
 use Illuminate\Http\Request;
@@ -18,6 +19,8 @@ class CommandeController extends Controller
     public function index()
     {
         $commande = Commande::all();
+        
+        
         return view('admin.index', compact('commande'));
     }
 
@@ -36,13 +39,15 @@ class CommandeController extends Controller
         foreach ($commande_produit as $cp) {
 
             $produit = Produits::where('id', $cp->produit_id)->first();
+            $image = ImageProduit::where('produit_id', $cp->produit_id )->first();
             $listeProduitparcommande[] = array(
                 'nom' => $produit->lib,
                 'prix' => $produit->prix,
                 'qte' => $cp->qte,
                 'couleur' => $cp->couleur,
                 'taille' => $cp->taille,
-                'prix_total' => $cp->prix
+                'prix_total' => $cp->prix,
+                'image' => $image ? $image->img : null,
             );
         }
 

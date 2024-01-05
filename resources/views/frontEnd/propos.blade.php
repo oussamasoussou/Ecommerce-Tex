@@ -7,7 +7,7 @@
         <section class="contact__section " style="padding:9rem 0rem 0rem 0rem">
             <div class="container">
                     <div class="section__heading text-center mb-40">
-                        <h4 class="text__secondary mb-10"> <span style="font-size: 39px">  À PROPOS DE NOUS</span> </h4>
+                        <h4 class="text__secondary mb-10"> <span style="font-size: 30px">  À PROPOS DE NOUS</span> </h4>
                     </div>
             </div>
         </section>

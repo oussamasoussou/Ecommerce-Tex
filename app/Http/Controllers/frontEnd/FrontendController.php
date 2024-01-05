@@ -56,6 +56,7 @@ class FrontendController extends Controller
         $tailles = Taille::all();
         $Listeproduit = Produits::where('sous_categorie_id', $id)->get();
         $produit = [];
+        $information = Information::all();
     
         foreach ($Listeproduit as $pro) {
             $img = ImageProduit::where('produit_id', $pro->id)->get();
@@ -64,7 +65,6 @@ class FrontendController extends Controller
         }
     
         $listeCateg = Categorie::with('sous_categorie')->get();
-        $information = Information::all();
         return view('frontEnd.product', compact('listeCateg', 'produit', 'information','couleurs', 'tailles'));
     }
     
