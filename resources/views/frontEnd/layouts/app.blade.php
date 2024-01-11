@@ -15,7 +15,8 @@
         <link rel="stylesheet" href='{{ asset("frontEnd/css/vendor/bootstrap.min.css" )}}'>
         <link rel="stylesheet" href='{{ asset("frontEnd/css/style.css" )}}'>
         <link rel="stylesheet" href='{{ asset("frontEnd/css/product.scss" )}}'>
-        
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
         <style>
             .message {
                   position: fixed;
@@ -90,6 +91,242 @@
     <script src='{{ asset("frontEnd/assets/assets/js/bootstrap.bundle.min.js") }}'></script>
     <script src='{{ asset("frontEnd/assets/assets/js/templatemo.js") }}'></script>
     <script src='{{ asset("frontEnd/assets/assets/js/custom.js") }}'></script>
+    
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function mettreAJourNombreProduits() {
+            console.log('Envoi de la requête AJAX...');
+            $.ajax({
+                type: 'GET',
+                url: '/panier/count',
+                success: function(data) {
+                    console.log('Réponse de la requête AJAX :', data);
+                    $('#items__count').text(data);
+                },
+                error: function(error) {
+                    console.error('Erreur lors de la récupération du nombre de produits dans le panier :', error);
+                }
+            });
+        }
+
+        mettreAJourNombreProduits();
+    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var btnsSupprimer = document.querySelectorAll('.btn-supprimer');
+
+        btnsSupprimer.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var produitId = btn.getAttribute('data-produit-id');
+
+                // Envoyer la requête DELETE
+                fetch('/panier/supprimer/' + produitId, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Actualiser la page ou mettre à jour l'affichage du panier
+                        location.reload();
+                    } else {
+                        console.error('Erreur lors de la suppression du produit du panier.');
+                    }
+                })
+                .catch(error => console.error('Erreur lors de la requête DELETE:', error));
+            });
+        });
+    });
+</script>
+
+
+<script>
+    function toggleSubMenu() {
+        var productSubMenu = document.getElementById("productSubMenu");
+        var additionalSubMenu = document.getElementById("additionalSubMenu");
+        var contactSubMenu = document.getElementById("contactSubMenu");
+
+        if (productSubMenu.style.display === "none") {
+            productSubMenu.style.display = "block";
+            additionalSubMenu.style.display = "none";
+            contactSubMenu.style.display = "none";
+        } else {
+            productSubMenu.style.display = "none";
+            additionalSubMenu.style.display = "block";
+            contactSubMenu.style.display = "block";
+        }
+    }
+
+    function ajouterArticle(product) {
+        let element = document.getElementById('panier');
+        let imgPr = null;
+
+        if (Array.isArray(product.img) && product.img[0] !== undefined) {
+            imgPr = product.img[0].img;
+        } else if (product.img !== null) {
+            imgPr = product.img;
+        } else {
+            imgPr = null;
+        }
+
+        // Afficher le prix en fonction de prix_promo s'il n'est pas null, sinon utiliser prix
+        let prixAffiche = product.prix_promo !== null ? product.prix_promo : product.prix;
+
+        // Mettez à jour le contenu du panier
+        let newArticle = document.createElement('div');
+        newArticle.id = product.id;
+        newArticle.classList.add('cardachat', 'minicart__product--items', 'd-flex');
+        newArticle.innerHTML = `
+            <input type="hidden" value='${product.id}' name="id_product[]">
+            <div class="minicart__thumbnail">
+                <a href="#"><img src="/${imgPr}" alt="product-img"></a>
+            </div>
+            <div class="minicart__text">
+                <h4 class="minicart__subtitle"><a href="#">${product.lib} </a></h4>
+                <span class="color__variant"></span>
+                <div class="minicart__price">
+                    <span class="current__price">${prixAffiche}&nbsp;TND</span>
+                </div>
+                <div class="minicart__text--footer d-flex align-items-center">
+                    <div class="quantity__box minicart__quantity">
+                        <button type="button" class="quantity__value decrease" aria-label="quantity value" value="Decrease Value" onclick="subquantite(${product.id})">-</button>
+                        <label>
+                            <input type="number" id="quantite_${product.id}" name="quantite_${product.id}" class="quantity__number" value="1" data-counter />
+                        </label>
+                        <button type="button" class="quantity__value increase" aria-label="quantity value" value="Increase Value" onclick="addquantite(${product.id})">+</button>
+                    </div>
+                    <button class="minicart__product--remove" aria-label="minicart remove btn" onclick="removeArticle(${product.id})">Supprimer</button>
+                </div>
+            </div>
+        `;
+
+        element.appendChild(newArticle);
+
+        countArticle();
+        updatePanierContent();
+
+        let messageElement = document.createElement('div');
+        messageElement.className = 'message';
+        messageElement.innerText = 'Produit ajouté au panier !';
+        document.body.appendChild(messageElement);
+
+        // Supprimez le message après 2 secondes
+        setTimeout(function () {
+            messageElement.remove();
+        }, 2000);
+    }
+
+    function removeArticle(id) {
+        let element = document.getElementById(id);
+        if (element) {
+            element.remove();
+            countArticle();
+            updatePanierContent();
+        }
+        updatePanierContent();
+    }
+
+    function countArticle() {
+        var numItems = document.getElementsByClassName("cardachat").length;
+        let element = document.getElementById('items__count');
+        element.innerText = numItems;
+    }
+
+    function updatePanierContent() {
+        let element = document.getElementById('panier');
+        let panierContent = element.innerHTML;
+        localStorage.setItem('panierContent', panierContent);
+    }
+
+    function removeAllArticle() {
+        let element = document.getElementById('panier');
+        element.innerHTML = '';
+        let elementt = document.getElementById('items__count');
+        elementt.innerText = 0;
+    }
+
+    function addquantite(id) {
+        let element = document.getElementById('quantite_' + id);
+        element.value = parseInt(element.value) + 1;
+    }
+
+    function subquantite(id) {
+        let element = document.getElementById('quantite_' + id);
+        let value = parseInt(element.value) - 1;
+        if (value < 0) {
+            element.value = 0;
+        } else {
+            element.value = value;
+        }
+    }
+
+    function chargerPanierDepuisLocalStorage() {
+        let element = document.getElementById('panier');
+        let savedPanierContent = localStorage.getItem('panierContent');
+        if (savedPanierContent) {
+            element.innerHTML = savedPanierContent;
+            countArticle(); // Mettez à jour le nombre d'articles au chargement
+        }
+    }
+
+    // Appelez cette fonction au chargement de la page pour charger le panier depuis le stockage local
+    window.addEventListener('load', function () {
+        chargerPanierDepuisBackend();
+    });
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const addToCartButtons = document.querySelectorAll('.addToCartBtn');
+
+                addToCartButtons.forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        const productId = this.getAttribute('data-product-id');
+                        const couleur = document.getElementById('couleur_' + productId).value;
+                        const taille = document.getElementById('taille_' + productId).value;
+                        const quantite = document.getElementById('qte_' + productId).value;
+
+                        axios.post('/storePanier', {
+                            produit_id: productId,
+                            couleur: couleur,
+                            taille: taille,
+                            qte: quantite // Corrected the parameter name to match the controller
+                        })
+                        .then(function (response) {
+                            console.log(response.data);
+                            ajouterAuPanier(response.data.produit);
+                        })
+                        .catch(function (error) {
+                            console.error(error);
+                        });
+                    });
+                });
+
+                function ajouterAuPanier(product) {
+                    console.log('Produit ajouté au panier côté client:', product);
+                }
+            });
+        </script>
+<script>
+        // Fonction pour ajouter le produit au panier côté client
+        function ajouterAuPanier(product) {
+            // Le reste du code pour ajouter le produit au panier côté client
+            // ...
+
+            // Exemple générique pour afficher le produit dans la console
+            console.log('Produit ajouté au panier côté client:', product);
+        }
+    });
+</script>
+
 
 
 </body>

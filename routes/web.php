@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\CouleurController;
+use App\Http\Controllers\Admin\LivraisonController;
 use App\Http\Controllers\Admin\TailleController;
+use App\Http\Controllers\frontEnd\PanierController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -42,12 +44,18 @@ Route::get('/clear-optimization', function () {
 Route::get('/', [FrontendController::class, 'index']); 
 Route::get('/produit/{id}', [FrontendController::class, 'getProduct']); 
 Route::get('/details-produit/{id}', [FrontendController::class, 'getDetailsProduct']); 
+Route::get('details-produit-selected/{id}', [FrontendController::class, 'detail']);
 Route::get('/propos', [FrontendController::class, 'propos']); 
 Route::post('search-produit', [ProduitController::class, 'searchProduct']); 
 Route::post('panier', [ProduitController::class, 'PanierProduct']); 
 Route::post('confirmer_commande', [ProduitController::class, 'ConfirmePanier']); 
-Route::get('/page-contact', [ContactController::class, 'indexfront']); 
+Route::post('/page-contact', [ContactController::class, 'indexfront']); 
 Route::post('contact', [ContactController::class, 'store']); 
+
+Route::post('/storePanier', [PanierController::class, 'storePanier'])->name('storePanier');
+Route::delete('/panier/supprimer/{id}', [PanierController::class, 'supprimerProduit'])->name('panier.supprimer');
+Route::get('/panier/count', [PanierController::class, 'countPanier'])->name('panier.count');
+
 
 Route::get('/details-seller/{id}', [FrontendController::class, 'getDetailsSeller']); 
 
@@ -111,6 +119,13 @@ Route::middleware(['auth','isAdmin'])->group(function() {
     Route::get('edit-propos-admin/{id}', [ProposController::class, 'edit']); 
     Route::put('update-propos-admin/{id}', [ProposController::class, 'update']); 
     Route::get('delete-propos-admin/{id}', [ProposController::class, 'destroy']);
+
+    Route::get('/livraison-admin', [LivraisonController::class, 'index']); 
+    Route::get('create-livraison-admin', [LivraisonController::class, 'create']); 
+    Route::post('add-livraison-admin', [LivraisonController::class, 'store']); 
+    Route::get('edit-livraison-admin/{id}', [LivraisonController::class, 'edit']); 
+    Route::put('update-livraison-admin/{id}', [LivraisonController::class, 'update']); 
+    Route::get('delete-livraison-admin/{id}', [LivraisonController::class, 'destroy']);
 
     Route::get('/dashboard', [CommandeController::class, 'index']);   
     Route::get('edit-commandes/{id}', [CommandeController::class, 'edit']); 

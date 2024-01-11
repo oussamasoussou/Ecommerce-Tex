@@ -1941,9 +1941,14 @@ select {
 }
 
 .text__secondary {
-  color: #045b62;
-  font-size: 30px;
-  text-shadow: 2px 1px 2px #cbd5d6;
+    border: 0;
+    padding: 0;
+    background: none;
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #045068;
+    text-decoration: underline;
 }
 
 @media (max-width: 429px) {
@@ -13698,4 +13703,90 @@ input.quickview__value--number {
   width: 287px;
   height: 287px;
   left: 41px;
+}
+
+
+.display-block-panier{
+  min-width: 200px;
+    max-width: 200px;
+    max-height: 200px;
+    min-height: 200px;
+}
+
+
+.couleur-cercle {
+  width: 20px; /* ajustez la taille selon vos besoins */
+  height: 20px; /* ajustez la taille selon vos besoins */
+  border-radius: 50%;
+  margin-top: 5px; /* ajustez la marge selon vos besoins */
+}
+
+.product-info-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Ajustez l'espacement entre les div */
+  border-bottom: 1px solid #ccc; /* Ajoute une ligne verticale entre les div */
+}
+
+.product-info-container img {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+}
+
+.product-info-container p {
+  margin: 0; /* Supprime la marge par défaut des paragraphes */
+}
+
+.couleur-cercle {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 5px; /* Ajustez l'espacement entre la couleur et le texte */
+}
+
+
+.font-panier{
+  border: 0;
+    padding: 0;
+    background: none;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.font-total{
+  border: 0;
+    padding: 0;
+    background: none;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.font-total-color{
+  border: 0;
+    padding: 0;
+    background: none;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #045068
+}
+.font-panier-color{
+  border: 0;
+    padding: 0;
+    background: none;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #046888
+}
+.font-panier-color2{
+    border: 0;
+    padding: 0;
+    background: none;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #045068
 }

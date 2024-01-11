@@ -104,7 +104,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18.897" height="21.565" viewBox="0 0 18.897 21.565">
                                     <path  d="M16.84,8.082V6.091a4.725,4.725,0,1,0-9.449,0v4.725a.675.675,0,0,0,1.35,0V9.432h5.4V8.082h-5.4V6.091a3.375,3.375,0,0,1,6.75,0v4.691a.675.675,0,1,0,1.35,0V9.433h3.374V21.581H4.017V9.432H6.041V8.082H2.667V21.641a1.289,1.289,0,0,0,1.289,1.29h16.32a1.289,1.289,0,0,0,1.289-1.29V8.082Z" transform="translate(-2.667 -1.366)" fill="currentColor"/>
                                 </svg>
-                                <span class="items__count" id="items__count"> 0 </span>
+                                <span class="items__count" id="items__count">{{ $nombreProduitsPanier }}</span>
                             </a>
                         </li>
                     </ul>
@@ -168,11 +168,60 @@
         </div>
         <form class="widget__search--form" method="POST" action="{{ url('panier')}}" enctype="multipart/form-data">
         @csrf 
-            <div id="panier">
+        <div>
+        @foreach($paniers as $panier)
+    <div class="panier-item" style="border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; padding: 10px;">
+        <div style="display: flex; align-items: center;">
+            <img src="{{ asset($images[$panier->produit_id][0]->lib) }}" alt="Product Image" style="width: 80px; height: 80px; margin-right: 10px; border-radius: 8px;">
+            <div>
+                <p class="font-panier-color">{{ $panier->produit->lib }}</p>
+                <p style="margin-top: 0px; padding: 5px 0;">
+                    <span class="font-panier">Quantité:</span>
+                    <span class="font-panier-color2">{{ $panier->qte }}</span>
+                </p>
+                @foreach($panier->produit->couleurProduits as $couleurProduit)
+                    <p style="margin-top: -28px; padding: 0;">
+                        <span class="font-panier">Couleur :</span>
+                        <span class="couleur-cercle" style="background-color: #{{ $couleurProduit->couleur->code }}"></span>
+                    </p>
+                @endforeach
+                @foreach($panier->produit->tailleProduits as $tailleProduit)
+                    <p style="margin-top: -17px; padding: 0;">
+                        <span class="font-panier">Taille :</span>
+                        <span class="font-panier-color2">{{ $tailleProduit->taille->taille }}</span>
+                    </p>
+                @endforeach
+                <p style="margin-top: -17px;">
+                    <span class="font-panier">Prix :</span>
+                    <span class="font-panier-color2">{{ $panier->prix }}</span>
+                </p>
+                <button class="minicart__product--remove btn-supprimer" data-produit-id="{{ $panier->id }}" aria-label="minicart remove btn" style="margin-top: -17px;">Supprimer</button>
             </div>
+        </div>
+    </div>
+@endforeach
+
+            <div class="panier-item d-flex justify-content-between" style="border-bottom: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; padding: 10px;">  
+                <span class="font-total">Sous-total</span>
+                <span class="font-total-color">{{ $prixTotalPanier}} TND</span>
+            </div>
+
+            <div class="panier-item d-flex justify-content-between" style="border-bottom: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; padding: 10px;">  
+                <span class="font-total">Livraison</span>
+                <span class="font-total-color">{{ $prixLivraison }} TND</span>
+            </div>
+
+            <div class="panier-item d-flex justify-content-between" style="border-bottom: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; padding: 10px;">  
+                <span class="font-total">Total</span>
+                <span class="font-total-color">{{ $prixTotalPanier + $prixLivraison }} TND</span>
+            </div>
+
+
+
+
         <div class="minicart__button d-flex justify-content-center" style="margin-top:20px;bottom: 6px;">
             <button class="primary__btn minicart__button--link"   type="submit" >Confirmer</button>
-            <a class="primary__btn minicart__button--link" onclick="removeAllArticle()"  >Effacer tous</a>
+            <a class="primary__btn minicart__button--link">Effacer tous</a>
         </div>
         </form>
     </div>
@@ -191,151 +240,3 @@
         </button>
     </div>
 </header>
-
-<script> 
-
-function toggleSubMenu() {
-            var productSubMenu = document.getElementById("productSubMenu");
-            var additionalSubMenu = document.getElementById("additionalSubMenu");
-            var contactSubMenu = document.getElementById("contactSubMenu");
-
-            if (productSubMenu.style.display === "none") {
-                productSubMenu.style.display = "block";
-                additionalSubMenu.style.display = "none";
-                contactSubMenu.style.display = "none";
-            } else {
-                productSubMenu.style.display = "none";
-                additionalSubMenu.style.display = "block";
-                contactSubMenu.style.display = "block";
-            }
-        }
-
-        function ajouterArticle(product) {
-    let element = document.getElementById('panier');
-    let imgPr = null;
-
-    if (Array.isArray(product.img) && product.img[0] !== undefined) {
-        imgPr = product.img[0].img;
-    } else if (product.img !== null) {
-        imgPr = product.img;
-    } else {
-        imgPr = null;
-    }
-
-    // Afficher le prix en fonction de prix_promo s'il n'est pas null, sinon utiliser prix
-    let prixAffiche = product.prix_promo !== null ? product.prix_promo : product.prix;
-
-    // Mettez à jour le contenu du panier
-    let newArticle = document.createElement('div');
-    newArticle.id = product.id;
-    newArticle.classList.add('cardachat', 'minicart__product--items', 'd-flex');
-    newArticle.innerHTML = `
-        <input type="hidden" value='${product.id}' name="id_product[]">
-        <div class="minicart__thumbnail">
-            <a href="#"><img src="/${imgPr}" alt="product-img"></a>
-        </div>
-        <div class="minicart__text">
-            <h4 class="minicart__subtitle"><a href="#">${product.lib} </a></h4>
-            <span class="color__variant"></span>
-            <div class="minicart__price">
-                <span class="current__price">${prixAffiche}&nbsp;TND</span>
-            </div>
-            <div class="minicart__text--footer d-flex align-items-center">
-                <div class="quantity__box minicart__quantity">
-                    <button type="button" class="quantity__value decrease" aria-label="quantity value" value="Decrease Value" onclick="subquantite(${product.id})">-</button>
-                    <label>
-                        <input type="number" id="quantite_${product.id}" name="quantite_${product.id}" class="quantity__number" value="1" data-counter />
-                    </label>
-                    <button type="button" class="quantity__value increase" aria-label="quantity value" value="Increase Value" onclick="addquantite(${product.id})">+</button>
-                </div>
-                <button class="minicart__product--remove" aria-label="minicart remove btn" onclick="removeArticle(${product.id})">Supprimer</button>
-            </div>
-        </div>
-    `;
-
-    element.appendChild(newArticle);
-
-    countArticle();
-    updatePanierContent();
-
-    let messageElement = document.createElement('div');
-    messageElement.className = 'message';
-    messageElement.innerText = 'Produit ajouté au panier !';
-    document.body.appendChild(messageElement);
-
-    // Supprimez le message après 2 secondes
-    setTimeout(function () {
-        messageElement.remove();
-    }, 2000);
-}
-
-
-function removeArticle(id) {
-    let element = document.getElementById(id);
-    if (element) {
-        element.remove();
-        countArticle();
-        updatePanierContent();
-    }
-    updatePanierContent();
-}
-function countArticle() {
-    var numItems = document.getElementsByClassName("cardachat").length;
-    let element = document.getElementById('items__count');
-    element.innerText = numItems;
-}
-
-function updatePanierContent() {
-    let element = document.getElementById('panier');
-    let panierContent = element.innerHTML;
-    localStorage.setItem('panierContent', panierContent);
-}
-
-
-
-function removeAllArticle() {
-    let element = document.getElementById('panier');
-    element.innerHTML = '';
-    let elementt = document.getElementById('items__count');
-    elementt.innerText = 0;
-}
-
-function addquantite(id) {
-    let element = document.getElementById('quantite_' + id);
-    element.value = parseInt(element.value) + 1;
-}
-
-function subquantite(id) {
-    let element = document.getElementById('quantite_' + id);
-    let value = parseInt(element.value) - 1;
-    if (value < 0) {
-        element.value = 0;
-    } else {
-        element.value = value;
-    }
-}
-
-function chargerPanierDepuisLocalStorage() {
-    let element = document.getElementById('panier');
-    let savedPanierContent = localStorage.getItem('panierContent');
-    if (savedPanierContent) {
-        element.innerHTML = savedPanierContent;
-        countArticle(); // Mettez à jour le nombre d'articles au chargement
-    }
-}
-
-function removeAllArticle() {
-    let element = document.getElementById('panier');
-    element.innerHTML = '';
-    countArticle(); // Mettez à jour le nombre d'articles
-    updatePanierContent(); // Mettez à jour le panier dans le stockage local
-}
-
-// Appelez cette fonction au chargement de la page pour charger le panier depuis le stockage local
-window.addEventListener('load', function () {
-    chargerPanierDepuisLocalStorage();
-});
-
-
- 
-</script>

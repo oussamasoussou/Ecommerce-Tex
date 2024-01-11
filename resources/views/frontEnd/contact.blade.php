@@ -125,6 +125,8 @@
                                     <p class="form-messege"></p>
                                 </form>
                             </div>
+                            @include('frontEnd.partials._panier')
+
                         </div>
                     </div>
                 </div>

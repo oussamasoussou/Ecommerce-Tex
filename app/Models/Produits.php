@@ -47,13 +47,20 @@ class Produits extends Model
         return $this->belongsToMany(ProduitCommande::class);
     }
 
-    public function couleurProduits() {
+    public function couleurProduits()
+    {
         return $this->hasMany(CouleurProduit::class, 'produit_id');
     }
 
-    public function tailleProduits() {
+    public function tailleProduits()
+    {
         return $this->hasMany(TailleProduit::class, 'produit_id');
     }
-        
-    
+
+    public function images()
+    {
+        return $this->hasMany(ImageProduit::class, 'produit_id');
+    }
+
+
 }

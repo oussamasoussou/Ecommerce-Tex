@@ -52,7 +52,6 @@ class ProduitController extends Controller
         $tailles = Taille::all();
         return view('admin.produit.create', compact('categorie', 'sous_categorie', 'produit','couleurs', 'tailles'));
     }
-
     /**
      * Store a newly created resource in storage.
      *

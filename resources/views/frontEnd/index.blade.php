@@ -136,7 +136,10 @@
                                         @endif
                                     </li>
                                 </ul>
-                                <a class="product__card--btn primary__btn" onclick="ajouterArticle({{$prod}})">Ajouter au panier</a>
+                                <!-- <a class="product__card--btn primary__btn" onclick="ajouterArticle({{$prod}})">Ajouter au panier</a> -->
+
+                                <a class="product__card--btn primary__btn" onclick="ajouterArticleAndRedirect({{$prod->id}})">Ajouter au panier</a>
+
                                 <div id="message" style="color:#13737e;text-shadow: 2px 1px 2px #cbd5d6;"></div>
                             </div>
                         </article>
@@ -150,7 +153,15 @@
         </div>
     </section>
 
-        
+    <script>
+    function ajouterArticleAndRedirect(productId) {
+
+        // Rediriger vers la page selectProduitPanier.blade.php avec l'ID du produit
+        window.location.href = "{{ url('details-produit-selected') }}/" + productId;
+    }
+</script>
+
+
 
     </main>
     @endsection

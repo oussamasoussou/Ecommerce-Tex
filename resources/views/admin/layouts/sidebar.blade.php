@@ -74,6 +74,13 @@
                         <a href="{{ url('contact-admin') }}" class="menu-item">Liste des contacts</a>
                     </div>
                 </div> 
+                <div class="nav-item has-sub">
+                    <a href="#"><i class="ik ik-box"></i><span>Livraison</span></a>
+                    <div class="submenu-content">
+                        <a href="{{ url('create-livraison-admin') }}" class="menu-item"><i class="ik-shopping-bag2"></i> Ajouter prix livraison</a>
+                        <a href="{{ url('livraison-admin') }}" class="menu-item"><i class="ik-shopping-bag2"></i>Liste des prix</a>
+                    </div>
+                </div>
             </nav>
         </div>
     </div>
